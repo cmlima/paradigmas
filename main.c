@@ -16,6 +16,8 @@ int obterOpcao(float valorDaCompra);
 void imprimirValorAVista(float valorDaCompra);
 void imprimirPrestacoes(float total, int prestacoes, float juros);
 void escolherFormaDePagamento();
+void troca(float *a, float *b);
+void mm(int *arr, size_t size, int *max, int *min);
 
 int main()
 {
@@ -24,7 +26,18 @@ int main()
     //analisarConjunto();
     //somaTurbinada();
     //verificarMedia();
-    escolherFormaDePagamento();
+    //escolherFormaDePagamento();
+    //float a = 1;
+    //float b = 2;
+    //troca(&a, &b);
+    //printf("a = %f \n b = %f \n", a, b);
+    int arr[] = { 10, 9, 8, 1, 2, 3, 7, 6, 5, 4 };
+    size_t size = sizeof(arr) / sizeof(arr[0]);
+    printf("size = %i \n", (int)size);
+    int max, min;
+    mm(arr, size, &max, &min);
+    printf("max = %i \n min = %i \n", max, min);
+
     return 0;
 }
 
@@ -76,7 +89,7 @@ void calcular() {
         printf("resultado: %.2f\n", termo1 * termo2);
         break;
     default:
-        printf("operação inválida");
+        printf("operacao invalida");
         break;
     }
 }
@@ -104,7 +117,10 @@ void analisarConjunto() {
         if (v2 <= v1) return;
         float v3 = obterValor();
         if (v3 <= v2) return;
-        printf("soma: %.2f\nproduto: %.2f\nmédia: %.2f\n", v1 + v2 + v3, v1 * v2 * v3, (v1 + v2 + v3) / 3);
+        float soma = v1 + v2 + v3;
+        float produto = v1 * v2 * v3;
+        float media = soma / 3;
+        printf("soma: %.2f\nproduto: %.2f\nmedia: %.2f\n", soma, produto, media);
     } while (TRUE);
 }
 
@@ -158,7 +174,7 @@ int obterOpcao(float valorDaCompra) {
         printf("(1) a vista com 10 porcento de desconto\n");
         printf("(2) em duas vezes (preco da etiqueta)\n");
         if (valorDaCompra > 100) {
-            printf("(3) de 3 ate 10 vezes com 3 porcento de juros ao mês\n");
+            printf("(3) de 3 ate 10 vezes com 3 porcento de juros ao mes\n");
         }
         scanf("%i", &opcao);
         fflush(stdin);
@@ -198,14 +214,9 @@ void escolherFormaDePagamento() {
         imprimirPrestacoes(valorDaCompra, 2, 0);
         break;
     case 3:
-        imprimirPrestacoes(valorDaCompra, 3, 0.03);
-        imprimirPrestacoes(valorDaCompra, 4, 0.03);
-        imprimirPrestacoes(valorDaCompra, 5, 0.03);
-        imprimirPrestacoes(valorDaCompra, 6, 0.03);
-        imprimirPrestacoes(valorDaCompra, 7, 0.03);
-        imprimirPrestacoes(valorDaCompra, 8, 0.03);
-        imprimirPrestacoes(valorDaCompra, 9, 0.03);
-        imprimirPrestacoes(valorDaCompra, 10, 0.03);
+        for (int i = 3; i <= 10; i++) {
+            imprimirPrestacoes(valorDaCompra, i, 0.03);
+        }
         break;
     default:
         printf("Ops. Algo deu errado.");
@@ -213,4 +224,17 @@ void escolherFormaDePagamento() {
     }
 }
 
+void troca(float *a, float *b) {
+    float temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
+void mm(int *arr, size_t size, int *max, int *min) {
+    *max = arr[0];
+    *min = arr[0];
+    for (int i = 1; i < size; i++) {
+        *max = arr[i] > *max ? arr[i] : *max;
+        *min = arr[i] < *min ? arr[i] : *min;
+    }
+}
